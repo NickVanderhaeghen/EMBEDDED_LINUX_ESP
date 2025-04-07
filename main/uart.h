@@ -10,4 +10,10 @@
 
 
 void config_uart();
+
+void uart_read();
+
+void uart_receive();
+
+
 void task_uart();

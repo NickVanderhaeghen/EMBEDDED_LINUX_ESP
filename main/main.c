@@ -1,9 +1,7 @@
 #include <stdio.h>
 
 #include "uart.h"
-#include "queue.h"
-#pragma once
-
+#include "ESP_queue.h"
 
 
 void app_main() {

@@ -20,14 +20,23 @@ void config_uart(){
     uart_set_pin(UART_NUM, TX_PIN, RX_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
 }
 
+
+void uart_read(){
+
+}
+
+void uart_receive(){
+
+}
+
+
 void task_uart(){
     config_uart();
     char data[BUF_SIZE];
     while (1) {
         int len = uart_read_bytes(UART_NUM, &data, BUF_SIZE, 20 / portTICK_PERIOD_MS);
         if (len > 0) {
-            data[len] = '\0';  // Null-terminate de string
-            gpio_set_level(47, 1);
+            data[len] = '\0';
             uart_write_bytes(UART_NUM, (const char *) data, len); // Echo terug
         }
     }
