@@ -7,5 +7,3 @@ cmake_minimum_required(VERSION 3.5)
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(ESP_CODE_V1)
 
-# Voeg submappen toe als component
-set(EXTRA_COMPONENT_DIRS)
