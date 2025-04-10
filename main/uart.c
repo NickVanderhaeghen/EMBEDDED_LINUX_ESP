@@ -8,10 +8,17 @@ int lengte = 25;
 queue_msg_t message;
 my_msg_t queue_msg;
 
-void config_uart(){
-    gpio_set_direction(47, GPIO_MODE_OUTPUT);
-    gpio_set_direction(48, GPIO_MODE_OUTPUT);
+queue_msg_t tx_msg = {
+    .msg.start = 's',
+    .msg.length = 25,
+    .msg.cmd = 'y',
+    .msg.data = "ik ben er nog",
+    .msg.wie = 'e',
+    .msg.stop = 's'
+};
 
+
+void config_uart(){
     uart_config_t uart_config = {
         .baud_rate = 115200,
         .data_bits = UART_DATA_8_BITS,
@@ -26,8 +33,9 @@ void config_uart(){
 }
 
 
-void uart_read(){
-
+void uart_send(){
+    uart_write_bytes(UART_NUM, &tx_msg, sizeof(queue_msg_t)); // Echo terug
+    printf("data is teruggestuurd. berichteje is %s\n\r", tx_msg.msg.data);
 }
 
 void uart_receive(){
@@ -40,8 +48,8 @@ void uart_receive(){
     
         // }
 
+        uart_send();
         data_to_typedef();
-        
         queueSend(RXQueue, &message);
     }
 }

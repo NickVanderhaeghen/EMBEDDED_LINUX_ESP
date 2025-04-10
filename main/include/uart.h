@@ -17,7 +17,7 @@
 
 void config_uart();
 
-void uart_read();
+void uart_send();
 
 void uart_receive();
 

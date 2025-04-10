@@ -10,14 +10,6 @@ uint8_t msg_length = 0;
 
 queue_msg_t rx_msg;
 
-queue_msg_t tx_msg = {
-    .msg.start = 's',
-    .msg.length = 25,
-    .msg.cmd = 'y',
-    .msg.data = "ik ben er nog",
-    .msg.wie = 'e',
-    .msg.stop = 's'
-};
 
 QueueHandle_t queueMake(){
     QueueHandle_t Queue = xQueueCreate(20, sizeof(my_msg_t)); //maakt een queue aan waar 20 berichtjes in kunnen
@@ -55,7 +47,6 @@ void afhandeling(){
         else{break;}
     }
 
-
     char tekst[lengte_data]; //Wat is de effectieve tekst die in data zit?
     for(int i = 0; i < lengte_data; i++){ //hier steken we de tekst in een char[lengte_data]
         tekst[i] = rx_msg.msg.data[i];
@@ -66,12 +57,23 @@ void afhandeling(){
     printf("data =  %s\n\r", rx_msg.msg.data);
     printf("wie =  0X%X\n\r", rx_msg.msg.wie);
 
-    if(strcmp(tekst, "aan") == 0){
-        gpio_set_level(48, 1);
+    if(rx_msg.msg.cmd == 'l'){
+        
+        if(strcmp(rx_msg.msg.data, "blink") == 0){
+            led_blink();
+        }
+        else if(strcmp(rx_msg.msg.data, "test") == 0){
+            led_test();
+        }
+        else if(strcmp(rx_msg.msg.data, "on") == 0){
+            led_all_on();
+        }
+        else if(strcmp(rx_msg.msg.data, "off") == 0){
+            led_all_off();
+        }
     }
-    else if(strcmp(tekst, "uit") == 0){
-        gpio_set_level(48, 0);
-    }
+
+
 }
 
 void queueTask(){
