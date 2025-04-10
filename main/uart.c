@@ -31,44 +31,26 @@ void uart_read(){
 }
 
 void uart_receive(){
-    int len = uart_read_bytes(UART_NUM, &data, sizeof(queue_msg), 20 / portTICK_PERIOD_MS);
+    int len = uart_read_bytes(UART_NUM, &data, sizeof(queue_msg_t), 20 / portTICK_PERIOD_MS);
     if (len > 0) {
-    //     printf("Ontvangen bericht van %d bytes:\n", len);
-    //     for (int i = 0; i < len; i++) {
-    //         printf("Byte %d: %02X\n\r", i, data[i]);
-    //         printf("is de letter %c\n\r", data[i]);
+        // printf("Ontvangen bericht van %d bytes:\n", len);
+        // for (int i = 0; i < len; i++) {
+        //     printf("Byte %d: %02X\n\r", i, data[i]);
+        //     printf("is de letter %c\n\r", data[i]);
     
-    //     }
+        // }
 
-        message.msg.cmd = data[2];
-        memcpy(message.msg.data, &data[3], 20);
-        message.msg.wie = data[23];
-
-
-        printf(" %c\n\r",message.msg.cmd);
-
-        for(int i= 0; i < 20; i++){
-            if(message.msg.data[i] != '\0'){
-                message.msg.data[i] = data[i+3];
-                printf(" %c\n\r",message.msg.data[i]);
-            }
-            else{break;}
-        }
-
-        printf(" %c\n\r",message.msg.wie);
+        data_to_typedef();
         
-
-
         queueSend(RXQueue, &message);
     }
 }
 
-void test(){
-    printf("startByte= %c\n\r", data[0]);
-    for(int i = 0; i < 25; i++){
-        if(i == 0){}
-
-    }
+void data_to_typedef(){
+    message.msg.length = data[9];
+    message.msg.cmd = data[10];
+    memcpy(message.msg.data, &data[11], 19);
+    message.msg.wie = data[31];
 }
 
 

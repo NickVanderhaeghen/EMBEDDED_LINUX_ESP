@@ -21,6 +21,6 @@ void uart_read();
 
 void uart_receive();
 
-void test();
+void data_to_typedef();
 
 void task_uart();

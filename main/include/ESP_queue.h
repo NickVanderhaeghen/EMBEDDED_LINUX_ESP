@@ -1,6 +1,8 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <stdio.h>
+#include <string.h>
+
 #pragma once
 
 extern QueueHandle_t RXQueue;
@@ -19,6 +21,7 @@ typedef struct //pakketjes hebben een lengte van 25, uint8_t = 1
 
 typedef struct
 {
+	long mtype;
     my_msg_t msg;
 }queue_msg_t;
 
@@ -30,6 +33,6 @@ void queueRemove();
 void queueSend(QueueHandle_t queue, queue_msg_t* queue_msg);
 void queueReceive(QueueHandle_t queue);
 
-void uartToQueue();
+void afhandeling();
 
 void queueTask();
