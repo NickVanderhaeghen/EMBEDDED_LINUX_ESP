@@ -13,12 +13,9 @@ extern QueueHandle_t TXQueue;
 
 typedef struct //pakketjes hebben een lengte van 25, uint8_t = 1 
 {
-    uint8_t start;
-    uint8_t length;
     uint8_t cmd;
     char data[20];
     uint8_t wie;
-    uint8_t stop;
 }my_msg_t;
 
 

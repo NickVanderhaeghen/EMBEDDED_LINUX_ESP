@@ -52,7 +52,6 @@ void afhandeling(){
         tekst[i] = rx_msg.msg.data[i];
     }
 
-    printf("lengte =  %i\n\r", rx_msg.msg.length);
     printf("cmd =  %c\n\r", rx_msg.msg.cmd);
     printf("data =  %s\n\r", rx_msg.msg.data);
     printf("wie =  0X%X\n\r", rx_msg.msg.wie);
@@ -70,6 +69,9 @@ void afhandeling(){
         }
         else if(strcmp(rx_msg.msg.data, "off") == 0){
             led_all_off();
+        }
+        else if(strcmp(rx_msg.msg.data, "benjeernog") == 0){
+            uart_send();
         }
     }
 

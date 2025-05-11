@@ -9,12 +9,9 @@ queue_msg_t message;
 my_msg_t queue_msg;
 
 queue_msg_t tx_msg = {
-    .msg.start = 's',
-    .msg.length = 25,
     .msg.cmd = 'y',
     .msg.data = "ik ben er nog",
-    .msg.wie = 'e',
-    .msg.stop = 's'
+    .msg.wie = 'e'
 };
 
 
@@ -35,7 +32,7 @@ void config_uart(){
 
 void uart_send(){
     uart_write_bytes(UART_NUM, &tx_msg, sizeof(queue_msg_t)); // Echo terug
-    printf("data is teruggestuurd. berichteje is %s\n\r", tx_msg.msg.data);
+    printf("data is teruggestuurd. berichtje is %s\n\r", tx_msg.msg.data);
 }
 
 void uart_receive(){
@@ -47,7 +44,6 @@ void uart_receive(){
         //     printf("is de letter %c\n\r", data[i]);
     
         // }
-
         uart_send();
         data_to_typedef();
         queueSend(RXQueue, &message);
@@ -55,10 +51,9 @@ void uart_receive(){
 }
 
 void data_to_typedef(){
-    message.msg.length = data[9];
-    message.msg.cmd = data[10];
-    memcpy(message.msg.data, &data[11], 19);
-    message.msg.wie = data[31];
+    message.msg.cmd = data[8];
+    memcpy(message.msg.data, &data[9], 17);
+    message.msg.wie = data[29];
 }
 
 
